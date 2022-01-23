@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Stock } from '../../model/stock';
 
 @Component({
   selector: 'app-stock-item',
@@ -7,9 +8,49 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StockItemComponent implements OnInit {
 
-  constructor() { }
+  public stock!: Stock;
+  public stockClasses!: any;
+  public stockStyles!: any;
+  public stocks!: Array<Stock>
+
+  constructor() {}
 
   ngOnInit(): void {
+    this.stocks = [
+      new Stock('Test Stock Company', 'TSC', 85, 80),
+      new Stock('First Stock Company', 'FSC', 78, 60),
+      new Stock('Awesome Stock Company', 'ASC', 22, 80),
+      new Stock('Oaxaca Stock Company', 'OSC', 99, 80)
+    ]
+
+
+
+/*
+    let diff = (this.stock.price / this.stock.previousPrice) - 1;
+    let largeChange = Math.abs(diff) > 0.01;
+    this.stockClasses = {
+      "positive": this.stock.isPositiveChange(),
+      "negative": !this.stock.isPositiveChange(),
+      "large-change": largeChange,
+      "small-change": !largeChange
+    }
+    this.stockStyles = {
+      "color": this.stock.isPositiveChange() ? "green" : "red",
+      "font-size": largeChange ? "1.2em" : "0.8em"
+    }
+
+     */
+
+  }
+
+
+  toggleFavorite(event: any, index: any) {
+    console.log('Toggle favorite state', event);
+    this.stocks[index].favorite = !this.stocks[index].favorite;
+  }
+
+  trackStockByCode(index: any, stock: any) {
+    return stock.code;
   }
 
 }

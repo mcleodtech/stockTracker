@@ -1,1 +1,14 @@
-<p>stock-item works!</p>
+<div class="stock-container" *ngFor="let stock of stocks; index as i; trackBy: trackStockByCode">
+  <div class="name"><h3>{{ stock.name + ' (' + stock.code + ')' }}</h3></div>
+  <div class="price"
+              [class]="stock.isPositiveChange() ? 'positive' : 'negative' "
+              >${{ stock.price }}</div>
+  <!-- Using ngStyle:  -->
+  <!-- <div class="price" [ngStyle]="stockStyles">$ {{ stock.price }}</div> -->
+  <!-- Preferable to use ngClass to modify look and feel -->
+  <button (click)="toggleFavorite($event, i)"
+          [disabled]="stock.favorite">Add to Favorites
+  </button>
+  <button (click)="toggleFavorite($event, i)"
+          *ngIf="!stock.favorite">Watch</button>
+</div>

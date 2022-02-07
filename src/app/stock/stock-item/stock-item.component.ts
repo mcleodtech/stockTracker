@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+//import { EventEmitter } from 'stream';
 import { Stock } from '../../model/stock';
 
 @Component({
@@ -6,47 +7,25 @@ import { Stock } from '../../model/stock';
   templateUrl: './stock-item.component.html',
   styleUrls: ['./stock-item.component.sass']
 })
-export class StockItemComponent implements OnInit {
+export class StockItemComponent {
 
-  public stock!: Stock;
-  public stockClasses!: any;
-  public stockStyles!: any;
-  public stocks!: Array<Stock>
+  @Input() public stock!: Stock;
+  @Output() private toggleFavorite!: EventEmitter<Stock>;
 
-  constructor() {}
+  /*
+  * This is removed when we add the input:
+  * public stock!: Stock;
+  * public stockClasses!: any;
+  * public stockStyles!: any;
+  * public stocks!: Array<Stock>
+  */
 
-  ngOnInit(): void {
-    this.stocks = [
-      new Stock('Test Stock Company', 'TSC', 85, 80),
-      new Stock('First Stock Company', 'FSC', 78, 60),
-      new Stock('Awesome Stock Company', 'ASC', 22, 80),
-      new Stock('Oaxaca Stock Company', 'OSC', 99, 80)
-    ]
-
-
-
-/*
-    let diff = (this.stock.price / this.stock.previousPrice) - 1;
-    let largeChange = Math.abs(diff) > 0.01;
-    this.stockClasses = {
-      "positive": this.stock.isPositiveChange(),
-      "negative": !this.stock.isPositiveChange(),
-      "large-change": largeChange,
-      "small-change": !largeChange
-    }
-    this.stockStyles = {
-      "color": this.stock.isPositiveChange() ? "green" : "red",
-      "font-size": largeChange ? "1.2em" : "0.8em"
-    }
-
-     */
-
+  constructor() {
+    this.toggleFavorite = new EventEmitter<Stock>();
   }
 
-
-  toggleFavorite(event: any, index: any) {
-    console.log('Toggle favorite state', event);
-    this.stocks[index].favorite = !this.stocks[index].favorite;
+  onToggleFavorite(event: any) {
+    this.toggleFavorite.emit(this.stock);
   }
 
   trackStockByCode(index: any, stock: any) {
@@ -54,3 +33,34 @@ export class StockItemComponent implements OnInit {
   }
 
 }
+
+
+/*  OLD CODE:
+ *   this.stocks = [
+ *     new Stock('Test Stock Company', 'TSC', 85, 80),
+ *     new Stock('First Stock Company', 'FSC', 78, 60),
+ *     new Stock('Awesome Stock Company', 'ASC', 22, 80),
+ *     new Stock('Oaxaca Stock Company', 'OSC', 99, 80)
+ *   ]
+
+ *   let diff = (this.stock.price / this.stock.previousPrice) - 1;
+ *   let largeChange = Math.abs(diff) > 0.01;
+ *   this.stockClasses = {
+ *     "positive": this.stock.isPositiveChange(),
+ *     "negative": !this.stock.isPositiveChange(),
+ *     "large-change": largeChange,
+ *     "small-change": !largeChange
+ *   }
+ *   this.stockStyles = {
+ *     "color": this.stock.isPositiveChange() ? "green" : "red",
+ *     "font-size": largeChange ? "1.2em" : "0.8em"
+ *   }
+ *
+ *   toggleFavorite(event: any, index: any) {
+ *     console.log('Toggle favorite state', event);
+ *     this.stocks[index].favorite = !this.stocks[index].favorite;
+ *   }
+ *
+ *
+ *    */
+

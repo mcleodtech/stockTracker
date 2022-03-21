@@ -7,6 +7,11 @@
   <!-- Using ngStyle:  -->
   <!-- <div class="price" [ngStyle]="stockStyles">$ {{ stock.price }}</div> -->
   <!-- Preferable to use ngClass to modify look and feel -->
+  <ng-content></ng-content>
+
+<!--
   <button (click)="onToggleFavorite($event)"
-          *ngIf="!stock.favorite">Add to Favorites
-  </button>
+          *ngIf="!stock.favorite">Add to Favorites </button>
+
+  <button (click)="changeStockPrice()">Change Price</button>
+ -->
